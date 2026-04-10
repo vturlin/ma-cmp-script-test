@@ -94,7 +94,6 @@ const CookieBanner = () => {
     const consentRecord = Cookies.get('consent_record');
 
     if (consentMode === 'absent' || consentMode === 'empty' || consentRecord === 'absent') {
-      alert("La bannière a décidé de s'afficher (Pas de cookies) !");
       setIsVisible(true);
     } else {
   GTM.updateConsent(consentMode);
