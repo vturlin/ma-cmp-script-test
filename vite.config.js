@@ -1,16 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig({
-  plugins: [react(), cssInjectedByJsPlugin()],
+  plugins: [react()],
   build: {
-    lib: {
-      entry: 'src/main.jsx',
-      name: 'CookieBannerWidget',
-      fileName: () => 'cmp-bundle.js',
-      formats: ['iife']
+    target: 'es2015', /* La magie pour les anciens iPhones */
+    rollupOptions: {
+      input: './src/main.jsx', /* <-- AJOUT CRUCIAL : On indique le vrai point de départ */
+      output: {
+        entryFileNames: `cmp-bundle.js`,
+        chunkFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`,
+        format: 'iife' 
+      }
     }
-  },
-  define: { 'process.env.NODE_ENV': '"production"' }
+  }
 })
