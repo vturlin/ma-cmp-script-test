@@ -11,7 +11,7 @@ const LOGO_URL = settings.logo || 'https://via.placeholder.com/150x50?text=Logo'
 const BG_IMAGE_URL = settings.bgImage || 'https://via.placeholder.com/600x800?text=Image+de+fond';
 const PRIMARY_COLOR = settings.primaryColor || '#000000';
 const POLICIES_URL = settings.policiesUrl || '/politique-de-confidentialite/';
-const GCP_FUNCTION_URL = settings.gcpFunctionUrl || '';
+const GCP_FUNCTION_URL = 'https://save-consent-141278816244.europe-west1.run.app';
 
 // --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
 window.dataLayer = window.dataLayer || [];
