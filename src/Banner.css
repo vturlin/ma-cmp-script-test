@@ -339,3 +339,41 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+/* Bouton flottant de re-consentement */
+.cmp-reopen-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  line-height: 1;
+}
+
+.cmp-reopen-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Lien politique de confidentialité */
+.cmp-policy-link {
+  font-size: 13px;
+  color: #888;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.cmp-policy-link a {
+  color: var(--cmp-color);
+  text-decoration: underline;
+}
