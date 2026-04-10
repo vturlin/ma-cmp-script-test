@@ -235,20 +235,39 @@ const CookieBanner = () => {
   );
 };
 
-// --- INITIALISATION DU WIDGET ---
+// --- INITIALISATION DU WIDGET (Version Ultra-Robuste) ---
 const initCMP = () => {
-  let container = document.getElementById('mon-cmp-root');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'mon-cmp-root';
-    document.body.appendChild(container);
+  try {
+    // ALERTE 1 : On vérifie si la fonction se lance bien
+    alert("1. Le script démarre bien sur Chrome iOS !"); 
+
+    let container = document.getElementById('mon-cmp-root');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'mon-cmp-root';
+      document.body.appendChild(container);
+    }
+    
+    // ALERTE 2 : On vérifie si le conteneur est bien créé
+    alert("2. Le conteneur HTML est créé !");
+
+    const root = createRoot(container);
+    root.render(<CookieBanner />);
+    
+  } catch (erreur) {
+    // ALERTE 3 : S'il y a un crash invisible, on l'affiche de force !
+    alert("CRASH REACT : " + erreur.message);
   }
-  const root = createRoot(container);
-  root.render(<CookieBanner />);
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initCMP);
-} else {
+// --- SÉCURITÉ DE LANCEMENT POUR CHROME IOS ---
+// Chrome iOS a parfois des ratés avec document.readyState via GTM
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // La page est déjà chargée, on lance tout de suite
   initCMP();
+} else {
+  // La page charge encore, on attend
+  document.addEventListener('DOMContentLoaded', initCMP);
+  // Filet de sécurité supplémentaire au cas où DOMContentLoaded rate
+  window.addEventListener('load', initCMP); 
 }
