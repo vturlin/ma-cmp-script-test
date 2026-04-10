@@ -1,0 +1,342 @@
+/* ==========================================================================
+   1. OVERLAY ET CONTENEUR PRINCIPAL
+   ========================================================================== */
+/* L'arrière-plan semi-transparent qui bloque la page */
+.cmp-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 2147483647; /* Z-index maximum pour passer par-dessus tout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* On s'assure que le border-box s'applique à tous les enfants */
+.cmp-modal-overlay * {
+  box-sizing: border-box;
+}
+
+/* La boîte blanche centrale */
+.cmp-modal-container {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 950px;
+  max-height: 90vh;
+  border-radius: 12px;
+  overflow: hidden; /* Coupe ce qui dépasse des angles arrondis */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   2. VUE : BANNIÈRE PRINCIPALE (Inspiration Club Med)
+   ========================================================================== */
+
+.cmp-view-banner {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  max-height: 90vh;
+}
+
+/* La colonne de gauche avec l'image */
+.cmp-image-column {
+  width: 45%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* L'URL de l'image est injectée directement par React */
+}
+
+/* La colonne de droite avec le texte */
+.cmp-text-column {
+  width: 55%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+   BARRE D'EN-TÊTE (Logo + Lien)
+   ========================================================================== */
+
+.cmp-header-bar {
+  display: flex;
+  flex-direction: row; /* Force absolument l'affichage sur une seule ligne */
+  justify-content: space-between; /* Envoie le logo à gauche, et le lien tout à droite */
+  align-items: center; /* Aligne le logo et le texte sur la même ligne verticale */
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.cmp-logo {
+  display: flex;
+  align-items: center;
+  flex: 1; /* Permet au conteneur de prendre l'espace disponible à gauche */
+  min-width: 100px; /* BOUCLIER 1 : Interdit au conteneur de faire moins de 100px de large */
+}
+
+.cmp-logo img {
+  height: 45px; /* BOUCLIER 2 : On utilise 'height' fixe plutôt que 'max-height' pour forcer son existence */
+  width: auto;
+  max-width: 100%; /* S'assure que le logo ne dépasse pas de son conteneur */
+  object-fit: contain;
+  object-position: left; /* Plaque bien le logo sur la gauche */
+}
+
+.cmp-link-dismiss {
+  background: transparent;
+  border: none;
+  color: #333333;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 500;
+  white-space: nowrap; /* Interdit formellement au texte de passer à la ligne */
+  transition: opacity 0.2s;
+}
+
+.cmp-link-dismiss:hover {
+  opacity: 0.7;
+}
+/* Textes principaux */
+.cmp-main-text {
+  flex-grow: 1; /* Pousse le footer vers le bas */
+}
+
+.cmp-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0 0 15px 0;
+  line-height: 1.2;
+}
+
+.cmp-intro {
+  font-size: 15px;
+  color: #444444;
+  line-height: 1.5;
+  margin-bottom: 25px;
+   text-align: justify;
+}
+
+.cmp-reason-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.cmp-reason-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #555555;
+  line-height: 1.4;
+}
+
+/* Footer (Boutons Paramétrer & Accepter) */
+.cmp-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eeeeee;
+}
+
+.cmp-link-preferences {
+  background: transparent;
+  border: none;
+  color: #333333;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 600;
+}
+
+.cmp-button-accept {
+  /* La couleur de fond est injectée par React via --cmp-color */
+  color: #000000; /* Texte en noir pour bien contraster avec le jaune */
+  border-radius: 30px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.2s;
+}
+
+.cmp-button-accept:hover {
+  filter: brightness(0.95);
+  transform: scale(1.02);
+}
+.cmp-site-name {
+  color: #555; /* Récupère la couleur dynamique injectée par React */
+  font-weight: 900;
+}
+
+
+/* ==========================================================================
+   3. RESPONSIVE DESIGN (Mobiles et petites tablettes)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .cmp-modal-container {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .cmp-view-banner {
+    flex-direction: column;
+  }
+
+  .cmp-image-column {
+    width: 100%;
+    height: 180px; /* Transforme l'image en bandeau haut sur mobile */
+    flex-shrink: 0;
+  }
+
+  .cmp-text-column {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .cmp-title {
+    font-size: 22px;
+  }
+
+  .cmp-header-bar {
+    margin-bottom: 20px;
+  }
+}
+
+/* ==========================================================================
+   4. VUE : CENTRE DE PRÉFÉRENCES (Vue 2)
+   ========================================================================== */
+
+.cmp-view-preferences {
+  padding: 30px 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.cmp-description_center {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.cmp-category {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+/* Boîte de chaque catégorie */
+.cmpcategory_1, .cmpcategory_2 {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+/* Met en surbrillance la catégorie si elle est cochée */
+.cmpcategory_1 {
+  border-color: var(--cmp-color);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.cmpcat_title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 5px;
+  color: #222;
+  padding-right: 60px; /* Laisse de la place pour le switch */
+}
+
+.cmpcat_description {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
+  padding-right: 50px;
+}
+
+
+/* ==========================================================================
+   5. LES INTERRUPTEURS (Toggles)
+   ========================================================================== */
+
+.toggle_validation {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+
+/* Quand l'input est coché, la couleur du switch prend la couleur principale dynamique */
+input:checked + .slider {
+  background-color: var(--cmp-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
