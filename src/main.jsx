@@ -10,7 +10,7 @@ const SITE_NAME = settings.siteName || 'notre site';
 const LOGO_URL = settings.logo || 'https://via.placeholder.com/150x50?text=Logo';
 const BG_IMAGE_URL = settings.bgImage || 'https://via.placeholder.com/600x800?text=Image+de+fond';
 const PRIMARY_COLOR = settings.primaryColor || '#000000';
-const POLICIES_URL = '/politique-de-confidentialite/';
+const POLICIES_URL = settings.policiesUrl || '/politique-de-confidentialite/';;
 
 // --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
 window.dataLayer = window.dataLayer || [];
@@ -71,10 +71,10 @@ const Cookies = {
     try {
       const expires = new Date();
       expires.setDate(expires.getDate() + 365);
-      document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${DOMAIN};path=/`;
-      
+      const rootDomain = DOMAIN.split('.').slice(-2).join('.');
+      document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${rootDomain};path=/`;
       const id = Date.now() + '.' + Math.random().toString(36).substr(2, 3);
-      document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${DOMAIN};path=/`;
+      document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${rootDomain};path=/`;
     } catch (e) {
       console.warn("Écriture des cookies bloquée en mode privé");
     }
@@ -84,6 +84,7 @@ const Cookies = {
 // --- LE COMPOSANT REACT ---
 const CookieBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isClosed, setIsClosed] = useState(false);
   const [view, setView] = useState('banner');
   const [toggles, setToggles] = useState({ 2: false, 3: false, 4: false });
 
@@ -96,42 +97,57 @@ const CookieBanner = () => {
       alert("La bannière a décidé de s'afficher (Pas de cookies) !");
       setIsVisible(true);
     } else {
-      alert("Chrome trouve un cookie existant (" + consentMode + "). La bannière reste cachée !");
-      GTM.updateConsent(consentMode);
-    }
+  GTM.updateConsent(consentMode);
+  setIsClosed(true);
+}
   }, []);
 
-  const handleAcceptAll = () => {
-    const fullConsent = '1,2,3,4';
-    Cookies.set(fullConsent);
-    GTM.updateConsent(fullConsent);
-    setIsVisible(false);
-  };
+  const closePanel = () => {
+  setIsVisible(false);
+  setIsClosed(true);
+  setView('banner');
+};
 
-  const handleDenyAll = () => {
-    const minimalConsent = '1';
-    Cookies.set(minimalConsent);
-    GTM.updateConsent(minimalConsent);
-    setIsVisible(false);
-  };
+const handleAcceptAll = () => {
+  const fullConsent = '1,2,3,4';
+  Cookies.set(fullConsent);
+  GTM.updateConsent(fullConsent);
+  closePanel();
+};
 
-  const handleSavePreferences = () => {
-    const selectedCats = ['1'];
-    if (toggles[2]) selectedCats.push('2');
-    if (toggles[3]) selectedCats.push('3');
-    if (toggles[4]) selectedCats.push('4');
-    
-    const customConsent = selectedCats.join(',');
-    Cookies.set(customConsent);
-    GTM.updateConsent(customConsent);
-    setIsVisible(false);
-  };
+const handleDenyAll = () => {
+  const minimalConsent = '1';
+  Cookies.set(minimalConsent);
+  GTM.updateConsent(minimalConsent);
+  closePanel();
+};
 
-  const handleToggle = (id) => {
-    setToggles(prev => ({ ...prev, [id]: !prev[id] }));
-  };
+const handleSavePreferences = () => {
+  const selectedCats = ['1'];
+  if (toggles[2]) selectedCats.push('2');
+  if (toggles[3]) selectedCats.push('3');
+  if (toggles[4]) selectedCats.push('4');
+  const customConsent = selectedCats.join(',');
+  Cookies.set(customConsent);
+  GTM.updateConsent(customConsent);
+  closePanel();
+};
 
-  if (!isVisible) return null;
+const handleToggle = (id) => {
+  setToggles(prev => ({ ...prev, [id]: !prev[id] }));
+};
+
+const handleReopen = () => {
+  setView('preferences');
+  setIsVisible(true);
+  setIsClosed(false);
+};
+
+if (!isVisible) return (
+  isClosed
+    ? <button className="cmp-reopen-btn" onClick={handleReopen} title="Gérer mes cookies">🍪</button>
+    : null
+);
 
   return (
     <div className="cmp-modal-overlay" style={{ '--cmp-color': PRIMARY_COLOR }}>
@@ -163,6 +179,10 @@ const CookieBanner = () => {
                   <div className="cmp-reason-item">
                     <p><strong>Gain de temps :</strong> Inutile de retaper vos informations à chaque visite.</p>
                   </div>
+                  <p className="cmp-policy-link">
+                    Pour en savoir plus, consultez notre{' '}
+                    <a href={POLICIES_URL} target="_blank" rel="noopener noreferrer">politique de confidentialité</a>.
+                  </p>
                 </div>
               </div>
 
@@ -237,7 +257,10 @@ const CookieBanner = () => {
               </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eeeeee' }}>
+              <button className="cmp-link-preferences" onClick={handleDenyAll}>
+                Tout refuser
+              </button>
               <button className="cmp-button-accept" onClick={handleSavePreferences} style={{ backgroundColor: 'var(--cmp-color)', borderColor: 'var(--cmp-color)' }}>
                 SAUVEGARDER MA SÉLECTION
               </button>
