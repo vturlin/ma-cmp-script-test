@@ -6,15 +6,14 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;  /* <-- On ajoute right */
+  bottom: 0; /* <-- On ajoute bottom */
+  /* Supprimez les lignes avec 'height' et 'width' */
   background-color: rgba(0, 0, 0, 0.65);
-  z-index: 2147483647; /* Z-index maximum pour passer par-dessus tout */
+  z-index: 2147483647;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
 }
 
 /* On s'assure que le border-box s'applique à tous les enfants */
