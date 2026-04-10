@@ -16,10 +16,6 @@ const POLICIES_URL = '/politique-de-confidentialite/';
 window.dataLayer = window.dataLayer || [];
 function gtag() { window.dataLayer.push(arguments); }
 
-// --- FONCTIONS UTILITAIRES SÉCURISÉES (GTM & COOKIES) ---
-window.dataLayer = window.dataLayer || [];
-function gtag() { window.dataLayer.push(arguments); }
-
 const GTM = {
   setDefault: () => {
     try {
