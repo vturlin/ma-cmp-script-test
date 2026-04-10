@@ -8,7 +8,7 @@ export default defineConfig({
     rollupOptions: {
       input: './src/main.jsx', /* <-- AJOUT CRUCIAL : On indique le vrai point de départ */
       output: {
-        entryFileNames: `cmp-bundle.js`,
+        entryFileNames: `welcome-widget.js,
         chunkFileNames: `[name].js`,
         assetFileNames: `[name].[ext]`,
         format: 'iife' 
