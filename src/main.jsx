@@ -16,55 +16,72 @@ const POLICIES_URL = '/politique-de-confidentialite/';
 window.dataLayer = window.dataLayer || [];
 function gtag() { window.dataLayer.push(arguments); }
 
+// --- FONCTIONS UTILITAIRES SÉCURISÉES (GTM & COOKIES) ---
+window.dataLayer = window.dataLayer || [];
+function gtag() { window.dataLayer.push(arguments); }
+
 const GTM = {
   setDefault: () => {
-    gtag('consent', 'default', {
-      'ad_storage': "denied", 'analytics_storage': "denied",
-      'functionality_storage': "denied", 'personalization_storage': "denied",
-      'security_storage': "granted", 'ad_user_data': "denied",
-      'ad_personalization': "denied", 'wait_for_update': 500
-    });
+    try {
+      gtag('consent', 'default', {
+        'ad_storage': "denied", 'analytics_storage': "denied",
+        'functionality_storage': "denied", 'personalization_storage': "denied",
+        'security_storage': "granted", 'ad_user_data': "denied",
+        'ad_personalization': "denied", 'wait_for_update': 500
+      });
+    } catch (e) { console.warn("GTM bloqué par le navigateur"); }
   },
   updateConsent: (consentMode) => {
-    const hasAds = consentMode.includes('4');
-    const hasPerso = consentMode.includes('3');
-    const hasAnalytics = consentMode.includes('2');
+    try {
+      const hasAds = consentMode.includes('4');
+      const hasPerso = consentMode.includes('3');
+      const hasAnalytics = consentMode.includes('2');
 
-    gtag('consent', 'update', {
-      'ad_storage': hasAds ? 'granted' : 'denied',
-      'ad_personalization': hasAds ? 'granted' : 'denied',
-      'ad_user_data': hasAds ? 'granted' : 'denied',
-      'functionality_storage': hasPerso ? "granted" : "denied",
-      'personalization_storage': hasPerso ? "granted" : "denied",
-      'analytics_storage': hasAnalytics ? 'granted' : 'denied',
-      'security_storage': "granted"
-    });
+      gtag('consent', 'update', {
+        'ad_storage': hasAds ? 'granted' : 'denied',
+        'ad_personalization': hasAds ? 'granted' : 'denied',
+        'ad_user_data': hasAds ? 'granted' : 'denied',
+        'functionality_storage': hasPerso ? "granted" : "denied",
+        'personalization_storage': hasPerso ? "granted" : "denied",
+        'analytics_storage': hasAnalytics ? 'granted' : 'denied',
+        'security_storage': "granted"
+      });
 
-    window.dataLayer.push({
-      'event': 'consent_mode_updated',
-      'consent_mode': consentMode
-    });
+      window.dataLayer.push({
+        'event': 'consent_mode_updated',
+        'consent_mode': consentMode
+      });
+    } catch (e) { console.warn("GTM bloqué par le navigateur"); }
   }
 };
 
 const Cookies = {
   get: (cname) => {
-    const name = cname + '=';
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i].trim();
-      if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+    try {
+      const name = cname + '=';
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+      }
+      return 'absent';
+    } catch (e) {
+      // Si le mode privé bloque la lecture, on fait comme s'il n'y avait pas de cookie
+      return 'absent'; 
     }
-    return 'absent';
   },
   set: (consent) => {
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 365);
-    document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${DOMAIN};path=/`;
-    
-    const id = Date.now() + '.' + Math.random().toString(36).substr(2, 3);
-    document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${DOMAIN};path=/`;
+    try {
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 365);
+      document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${DOMAIN};path=/`;
+      
+      const id = Date.now() + '.' + Math.random().toString(36).substr(2, 3);
+      document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${DOMAIN};path=/`;
+    } catch (e) {
+      console.warn("Écriture des cookies bloquée en mode privé");
+    }
   }
 };
 
