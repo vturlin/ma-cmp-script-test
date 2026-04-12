@@ -27,20 +27,6 @@ const PRIMARY_COLOR = settings.primaryColor || '#000000';
 const POLICIES_URL = settings.policiesUrl || '/politique-de-confidentialite/';
 const GCP_FUNCTION_URL = 'https://save-consent-141278816244.europe-west1.run.app';
 
-// --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
-window.dataLayer = window.dataLayer || [];
-function gtag() { window.dataLayer.push(arguments); }
-gtag('consent', 'default', {
-  'ad_storage': 'denied',
-  'analytics_storage': 'denied',
-  'functionality_storage': 'denied',
-  'personalization_storage': 'denied',
-  'security_storage': 'granted',
-  'ad_user_data': 'denied',
-  'ad_personalization': 'denied',
-  'wait_for_update': 500
-});
-
 const GTM = {
   updateConsent: (consentMode) => {
     try {
