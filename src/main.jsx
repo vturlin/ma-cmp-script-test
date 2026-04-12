@@ -180,7 +180,7 @@ if (!isVisible) return (
             </p>
             <div className="cmp-reason-list">
               <div className="cmp-reason-item">
-                <p><strong>Personnalisation :</strong> Proposer du contenu adapté à vos centres d'intérêt.</p>
+                <p><strong>Personnalisation :</strong> Proposer du contenu adapté à vos recherches et centres d'intérêt.</p>
               </div>
               <div className="cmp-reason-item">
                 <p><strong>Gain de temps :</strong> Inutile de saisir à nouveau vos informations lors de chaque visite.</p>
