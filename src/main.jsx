@@ -183,7 +183,7 @@ if (!isVisible) return (
                 <p><strong>Personnalisation :</strong> Proposer du contenu adapté à vos centres d'intérêt.</p>
               </div>
               <div className="cmp-reason-item">
-                <p><strong>Gain de temps :</strong> Inutile de retaper vos informations à chaque visite.</p>
+                <p><strong>Gain de temps :</strong> Inutile de saisir à nouveau vos informations lors de chaque visite.</p>
               </div>
             </div>
             <p className="cmp-policy-link">
