@@ -285,8 +285,8 @@ if (!isVisible) return (
 
   </div>
 </div>
-  
-
+);
+};
 // --- INITIALISATION DU WIDGET (Version Ultra-Robuste) ---
 const initCMP = () => {
   try {
