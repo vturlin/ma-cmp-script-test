@@ -1,18 +1,25 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    cssInjectedByJsPlugin() // ✅ CSS injecté dans le JS
+  ],
   build: {
-    target: 'es2015', /* La magie pour les anciens iPhones */
+    target: 'es2015',
+    minify: 'esbuild',          // ✅ minification explicite
+    reportCompressedSize: true, // ✅ affiche la taille gzip dans les logs
     rollupOptions: {
-      input: './src/main.jsx', /* <-- AJOUT CRUCIAL : On indique le vrai point de départ */
+      input: './src/main.jsx',
       output: {
         entryFileNames: `welcome-widget.js`,
         chunkFileNames: `[name].js`,
         assetFileNames: `[name].[ext]`,
-        format: 'iife' 
+        format: 'iife'
       }
     }
-  }
+  },
+  define: { 'process.env.NODE_ENV': '"production"' } // ✅ force le mode prod pour React
 })
