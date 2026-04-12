@@ -2,11 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './Banner.css';
 
-// --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
-window.dataLayer = window.dataLayer || [];
-function gtag() { window.dataLayer.push(arguments); }
-
-
 // --- RECUPERATION DYNAMIQUE DES VARIABLES ---
 const settings = window.cmpSettings || {};
 
@@ -18,13 +13,17 @@ const PRIMARY_COLOR = settings.primaryColor || '#000000';
 const POLICIES_URL = settings.policiesUrl || '/politique-de-confidentialite/';
 const GCP_FUNCTION_URL = 'https://save-consent-141278816244.europe-west1.run.app';
 
+// --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
+window.dataLayer = window.dataLayer || [];
+function gtag() { window.dataLayer.push(arguments); }
 const GTM = {
   updateConsent: (consentMode) => {
     try {
       const hasAds = consentMode.includes('4');
       const hasPerso = consentMode.includes('3');
       const hasAnalytics = consentMode.includes('2');
-
+      
+      
       gtag('consent', 'update', {
         'ad_storage': hasAds ? 'granted' : 'denied',
         'ad_personalization': hasAds ? 'granted' : 'denied',
@@ -195,7 +194,7 @@ if (!isVisible) return (
             {/* BOUTON REFUS SOUS LA POLITIQUE */}
             <div className="cmp-dismiss-wrapper">
               <button onClick={handleDenyAll} className="cmp-link-dismiss">
-                Continuer sans accepter;
+                Continuer sans accepter
               </button>
             </div>
           </div>
@@ -285,12 +284,12 @@ if (!isVisible) return (
 
   </div>
 </div>
-);
+  );
 };
+
 // --- INITIALISATION DU WIDGET (Version Ultra-Robuste) ---
 const initCMP = () => {
   try {
-
     let container = document.getElementById('mon-cmp-root');
     if (!container) {
       container = document.createElement('div');
