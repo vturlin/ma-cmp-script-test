@@ -5,12 +5,18 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 export default defineConfig({
   plugins: [
     react(),
-    cssInjectedByJsPlugin() // ✅ CSS injecté dans le JS
+    cssInjectedByJsPlugin()
   ],
+  resolve: {
+    alias: {
+      'react': 'preact/compat',
+      'react-dom': 'preact/compat',
+    }
+  },
   build: {
     target: 'es2015',
-    minify: 'esbuild',          // ✅ minification explicite
-    reportCompressedSize: true, // ✅ affiche la taille gzip dans les logs
+    minify: 'esbuild',
+    reportCompressedSize: true,
     rollupOptions: {
       input: './src/main.jsx',
       output: {
@@ -21,5 +27,5 @@ export default defineConfig({
       }
     }
   },
-  define: { 'process.env.NODE_ENV': '"production"' } // ✅ force le mode prod pour React
+  define: { 'process.env.NODE_ENV': '"production"' }
 })
