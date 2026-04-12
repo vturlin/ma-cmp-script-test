@@ -52,6 +52,8 @@ const GTM = {
   }
 };
 
+    GTM.setDefault();
+
 const Cookies = {
   get: (cname) => {
     try {
@@ -107,7 +109,6 @@ const CookieBanner = () => {
   const [toggles, setToggles] = useState({ 2: false, 3: false, 4: false });
 
   useEffect(() => {
-    GTM.setDefault();
     const consentMode = Cookies.get('consent_mode');
     const consentRecord = Cookies.get('consent_record');
 
