@@ -1,14 +1,12 @@
 /* ==========================================================================
    1. OVERLAY ET CONTENEUR PRINCIPAL
    ========================================================================== */
-/* L'arrière-plan semi-transparent qui bloque la page */
 .cmp-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;  /* <-- On ajoute right */
-  bottom: 0; /* <-- On ajoute bottom */
-  /* Supprimez les lignes avec 'height' et 'width' */
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.65);
   z-index: 2147483647;
   display: flex;
@@ -16,26 +14,24 @@
   justify-content: center;
 }
 
-/* On s'assure que le border-box s'applique à tous les enfants */
 .cmp-modal-overlay * {
   box-sizing: border-box;
 }
 
-/* La boîte blanche centrale */
 .cmp-modal-container {
   background-color: #ffffff;
   width: 90%;
   max-width: 950px;
   max-height: 90vh;
   border-radius: 12px;
-  overflow: hidden; /* Coupe ce qui dépasse des angles arrondis */
+  overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
 }
 
 /* ==========================================================================
-   2. VUE : BANNIÈRE PRINCIPALE (Inspiration Club Med)
+   2. VUE : BANNIÈRE PRINCIPALE
    ========================================================================== */
 
 .cmp-view-banner {
@@ -45,16 +41,13 @@
   max-height: 90vh;
 }
 
-/* La colonne de gauche avec l'image */
 .cmp-image-column {
   width: 45%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* L'URL de l'image est injectée directement par React */
 }
 
-/* La colonne de droite avec le texte */
 .cmp-text-column {
   width: 55%;
   padding: 40px;
@@ -64,14 +57,32 @@
 }
 
 /* ==========================================================================
-   BARRE D'EN-TÊTE (Logo + Lien)
+   LOGO CENTRÉ EN HAUT DE LA BANNIÈRE
+   ========================================================================== */
+
+.cmp-header-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.cmp-header-center img {
+  height: 55px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   BARRE D'EN-TÊTE (utilisée dans la vue préférences)
    ========================================================================== */
 
 .cmp-header-bar {
   display: flex;
-  flex-direction: row; /* Force absolument l'affichage sur une seule ligne */
-  justify-content: space-between; /* Envoie le logo à gauche, et le lien tout à droite */
-  align-items: center; /* Aligne le logo et le texte sur la même ligne verticale */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 30px;
   width: 100%;
 }
@@ -79,36 +90,24 @@
 .cmp-logo {
   display: flex;
   align-items: center;
-  flex: 1; /* Permet au conteneur de prendre l'espace disponible à gauche */
-  min-width: 100px; /* BOUCLIER 1 : Interdit au conteneur de faire moins de 100px de large */
+  flex: 1;
+  min-width: 100px;
 }
 
 .cmp-logo img {
-  height: 45px; /* BOUCLIER 2 : On utilise 'height' fixe plutôt que 'max-height' pour forcer son existence */
+  height: 45px;
   width: auto;
-  max-width: 100%; /* S'assure que le logo ne dépasse pas de son conteneur */
+  max-width: 100%;
   object-fit: contain;
-  object-position: left; /* Plaque bien le logo sur la gauche */
+  object-position: left;
 }
 
-.cmp-link-dismiss {
-  background: transparent;
-  border: none;
-  color: #333333;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 0;
-  font-weight: 500;
-  white-space: nowrap; /* Interdit formellement au texte de passer à la ligne */
-  transition: opacity 0.2s;
-}
+/* ==========================================================================
+   TEXTES ET BOUTONS DE LA BANNIÈRE
+   ========================================================================== */
 
-.cmp-link-dismiss:hover {
-  opacity: 0.7;
-}
-/* Textes principaux */
 .cmp-main-text {
-  flex-grow: 1; /* Pousse le footer vers le bas */
+  flex-grow: 1;
 }
 
 .cmp-title {
@@ -124,7 +123,7 @@
   color: #444444;
   line-height: 1.5;
   margin-bottom: 25px;
-   text-align: justify;
+  text-align: justify;
 }
 
 .cmp-reason-list {
@@ -139,6 +138,43 @@
   font-size: 14px;
   color: #555555;
   line-height: 1.4;
+}
+
+/* Lien politique de confidentialité */
+.cmp-policy-link {
+  font-size: 13px;
+  color: #888;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.cmp-policy-link a {
+  color: var(--cmp-color);
+  text-decoration: underline;
+}
+
+/* Bouton "Continuer sans accepter" sous la politique */
+.cmp-dismiss-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.cmp-link-dismiss {
+  background: transparent;
+  border: none;
+  color: #333333;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.cmp-link-dismiss:hover {
+  opacity: 0.7;
 }
 
 /* Footer (Boutons Paramétrer & Accepter) */
@@ -162,8 +198,7 @@
 }
 
 .cmp-button-accept {
-  /* La couleur de fond est injectée par React via --cmp-color */
-  color: #000000; /* Texte en noir pour bien contraster avec le jaune */
+  color: #000000;
   border-radius: 30px;
   padding: 12px 28px;
   font-size: 15px;
@@ -176,11 +211,11 @@
   filter: brightness(0.95);
   transform: scale(1.02);
 }
+
 .cmp-site-name {
-  color: #555; /* Récupère la couleur dynamique injectée par React */
+  color: #555;
   font-weight: 900;
 }
-
 
 /* ==========================================================================
    3. RESPONSIVE DESIGN (Mobiles et petites tablettes)
@@ -198,7 +233,7 @@
 
   .cmp-image-column {
     width: 100%;
-    height: 180px; /* Transforme l'image en bandeau haut sur mobile */
+    height: 180px;
     flex-shrink: 0;
   }
 
@@ -217,7 +252,7 @@
 }
 
 /* ==========================================================================
-   4. VUE : CENTRE DE PRÉFÉRENCES (Vue 2)
+   4. VUE : CENTRE DE PRÉFÉRENCES
    ========================================================================== */
 
 .cmp-view-preferences {
@@ -242,7 +277,6 @@
   margin-bottom: 30px;
 }
 
-/* Boîte de chaque catégorie */
 .cmpcategory_1, .cmpcategory_2 {
   background-color: #f8f9fa;
   border: 1px solid #e9ecef;
@@ -254,7 +288,6 @@
   transition: border-color 0.3s;
 }
 
-/* Met en surbrillance la catégorie si elle est cochée */
 .cmpcategory_1 {
   border-color: var(--cmp-color);
   background-color: rgba(255, 255, 255, 0.5);
@@ -265,7 +298,7 @@
   font-size: 15px;
   margin-bottom: 5px;
   color: #222;
-  padding-right: 60px; /* Laisse de la place pour le switch */
+  padding-right: 60px;
 }
 
 .cmpcat_description {
@@ -274,7 +307,6 @@
   line-height: 1.4;
   padding-right: 50px;
 }
-
 
 /* ==========================================================================
    5. LES INTERRUPTEURS (Toggles)
@@ -293,7 +325,7 @@
   height: 24px;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -321,7 +353,6 @@
   transition: .4s;
 }
 
-/* Quand l'input est coché, la couleur du switch prend la couleur principale dynamique */
 input:checked + .slider {
   background-color: var(--cmp-color);
 }
@@ -337,7 +368,11 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-/* Bouton flottant de re-consentement */
+
+/* ==========================================================================
+   6. BOUTON FLOTTANT DE RE-CONSENTEMENT
+   ========================================================================== */
+
 .cmp-reopen-btn {
   position: fixed;
   bottom: 20px;
@@ -361,17 +396,4 @@ input:checked + .slider:before {
 .cmp-reopen-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Lien politique de confidentialité */
-.cmp-policy-link {
-  font-size: 13px;
-  color: #888;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.cmp-policy-link a {
-  color: var(--cmp-color);
-  text-decoration: underline;
 }
