@@ -63,9 +63,9 @@ const Cookies = {
       const expires = new Date();
       expires.setDate(expires.getDate() + 365);
       const rootDomain = DOMAIN.split('.').slice(-2).join('.');
-      document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${rootDomain};path=/`;
+      document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${rootDomain};path=/;SameSite=Lax;Secure`;
       const id = Date.now() + '.' + Math.random().toString(36).substr(2, 3);
-      document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${rootDomain};path=/`;
+      document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${rootDomain};ppath=/;SameSite=Lax;Secure`;
     } catch (e) {
       console.warn("Écriture des cookies bloquée en mode privé");
     }
