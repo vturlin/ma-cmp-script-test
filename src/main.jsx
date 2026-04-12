@@ -195,7 +195,7 @@ if (!isVisible) return (
             {/* BOUTON REFUS SOUS LA POLITIQUE */}
             <div className="cmp-dismiss-wrapper">
               <button onClick={handleDenyAll} className="cmp-link-dismiss">
-                Continuer sans accepter &rarr;
+                Continuer sans accepter;
               </button>
             </div>
           </div>
@@ -290,8 +290,6 @@ if (!isVisible) return (
 // --- INITIALISATION DU WIDGET (Version Ultra-Robuste) ---
 const initCMP = () => {
   try {
-    // ALERTE 1 : On vérifie si la fonction se lance bien
-    alert("1. Le script démarre bien sur Chrome iOS !"); 
 
     let container = document.getElementById('mon-cmp-root');
     if (!container) {
@@ -299,16 +297,10 @@ const initCMP = () => {
       container.id = 'mon-cmp-root';
       document.body.appendChild(container);
     }
-    
-    // ALERTE 2 : On vérifie si le conteneur est bien créé
-    alert("2. Le conteneur HTML est créé !");
-
     const root = createRoot(container);
     root.render(<CookieBanner />);
     
   } catch (erreur) {
-    // ALERTE 3 : S'il y a un crash invisible, on l'affiche de force !
-    alert("CRASH REACT : " + erreur.message);
   }
 };
 
