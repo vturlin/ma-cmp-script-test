@@ -6,8 +6,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "preact": "^10.19.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
