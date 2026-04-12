@@ -8,11 +8,12 @@ export default defineConfig({
     cssInjectedByJsPlugin()
   ],
   resolve: {
-    alias: {
-      'react': 'preact/compat',
-      'react-dom': 'preact/compat',
-    }
-  },
+  alias: {
+    'react/jsx-runtime': 'preact/compat/jsx-runtime', // ✅ AJOUTER
+    'react': 'preact/compat',
+    'react-dom': 'preact/compat',
+  }
+},
   build: {
     target: 'es2015',
     minify: 'esbuild',
