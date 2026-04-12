@@ -161,127 +161,131 @@ if (!isVisible) return (
 
   return (
     <div className="cmp-modal-overlay" style={{ '--cmp-color': PRIMARY_COLOR }}>
-      <div className="cmp-modal-container">
-        
-        {/* VUE BANNIÈRE */}
-        {view === 'banner' && (
-          <div className="cmp-modal-content cmp-view-banner">
-            <div className="cmp-image-column" style={{ backgroundImage: `url(${BG_IMAGE_URL})` }}></div>
-            <div className="cmp-text-column">
-              <div className="cmp-header-bar">
-                <div className="cmp-logo">
-                  <img src={LOGO_URL} alt={`Logo ${SITE_NAME}`} />
-                </div>
-                <button onClick={handleDenyAll} className="cmp-link-dismiss">
-                  Continuer sans accepter &rarr;
-                </button>
-              </div>
+  <div className="cmp-modal-container">
+    
+    {/* VUE BANNIÈRE */}
+    {view === 'banner' && (
+      <div className="cmp-modal-content cmp-view-banner">
+        <div className="cmp-image-column" style={{ backgroundImage: `url(${BG_IMAGE_URL})` }}></div>
+        <div className="cmp-text-column">
 
-              <div className="cmp-main-text">
-                <h1 className="cmp-title">Tout d'abord bienvenue !</h1>
-                <p className="cmp-intro">
-                  Bienvenue sur <strong className="cmp-site-name">{SITE_NAME}</strong> ! Voici quelques bonnes raisons de dire « oui » à nos cookies pour une expérience personnalisée :
-                </p>
-                <div className="cmp-reason-list">
-                  <div className="cmp-reason-item">
-                    <p><strong>Personnalisation :</strong> Proposer du contenu adapté à vos centres d'intérêt.</p>
-                  </div>
-                  <div className="cmp-reason-item">
-                    <p><strong>Gain de temps :</strong> Inutile de retaper vos informations à chaque visite.</p>
-                  </div>
-                  <p className="cmp-policy-link">
-                    Pour en savoir plus, consultez notre{' '}
-                    <a href={POLICIES_URL} target="_blank" rel="noopener noreferrer">politique de confidentialité</a>.
-                  </p>
-                </div>
-              </div>
-
-              <div className="cmp-footer-actions">
-                <button className="cmp-link-preferences" onClick={() => setView('preferences')}>
-                  Paramétrer
-                </button>
-                <button className="cmp-button-accept" onClick={handleAcceptAll} style={{ backgroundColor: 'var(--cmp-color)', borderColor: 'var(--cmp-color)' }}>
-                  Accepter et continuer
-                </button>
-              </div>
-            </div>
+          {/* LOGO CENTRÉ EN HAUT */}
+          <div className="cmp-header-center">
+            <img src={LOGO_URL} alt={`Logo ${SITE_NAME}`} />
           </div>
-        )}
 
-        {/* VUE PRÉFÉRENCES */}
-        {view === 'preferences' && (
-          <div className="cmp-modal-content cmp-view-preferences">
-            <div className="cmp-header-bar">
-                <div className="cmp-logo">
-                  <img src={LOGO_URL} alt={`Logo ${SITE_NAME}`} style={{ maxHeight: '60px' }} />
-                </div>
-                <h2 style={{margin: 0, fontSize: '20px'}}>Centre de préférences</h2>
-            </div>
-            <span className="cmp-description_center">
-              Lorsque vous consultez un site Web, des données peuvent être stockées ou récupérées sous la forme de cookies. Vous pouvez modifier vos préférences ci-dessous.
-            </span>
-
-            <div className="cmp-category">
-              <div className="cmpcategory_1">
-                <span className="cmpcat_title">Cookies strictement nécessaires</span>
-                <span className="cmpcat_description">Absolument nécessaires au bon fonctionnement de notre site et ne peuvent pas être désactivés.</span>
-                <div className="toggle_validation">
-                  <label className="switch">
-                    <input type="checkbox" checked disabled />
-                    <span className="slider round"></span>
-                  </label>
-                </div>
+          <div className="cmp-main-text">
+            <h1 className="cmp-title">Tout d'abord bienvenue !</h1>
+            <p className="cmp-intro">
+              Bienvenue sur <strong className="cmp-site-name">{SITE_NAME}</strong> ! Voici quelques bonnes raisons de dire « oui » à nos cookies pour une expérience personnalisée :
+            </p>
+            <div className="cmp-reason-list">
+              <div className="cmp-reason-item">
+                <p><strong>Personnalisation :</strong> Proposer du contenu adapté à vos centres d'intérêt.</p>
               </div>
-
-              <div className={toggles[2] ? "cmpcategory_1" : "cmpcategory_2"}>
-                <span className="cmpcat_title">Mesure de la performance</span>
-                <span className="cmpcat_description">Ces cookies nous permettent de mesurer l'activité des utilisateurs sur notre site.</span>
-                <div className="toggle_validation">
-                  <label className="switch">
-                    <input type="checkbox" checked={toggles[2]} onChange={() => handleToggle(2)} />
-                    <span className="slider round"></span>
-                  </label>
-                </div>
-              </div>
-
-              <div className={toggles[3] ? "cmpcategory_1" : "cmpcategory_2"}>
-                <span className="cmpcat_title">Cookies de fonctionnalité</span>
-                <span className="cmpcat_description">Ces cookies nous permettent de mettre en oeuvre des fonctionnalités de personnalisation.</span>
-                <div className="toggle_validation">
-                  <label className="switch">
-                    <input type="checkbox" checked={toggles[3]} onChange={() => handleToggle(3)} />
-                    <span className="slider round"></span>
-                  </label>
-                </div>
-              </div>
-
-              <div className={toggles[4] ? "cmpcategory_1" : "cmpcategory_2"}>
-                <span className="cmpcat_title">Publicité ciblée</span>
-                <span className="cmpcat_description">Ces cookies peuvent être déposés par nos partenaires publicitaires.</span>
-                <div className="toggle_validation">
-                  <label className="switch">
-                    <input type="checkbox" checked={toggles[4]} onChange={() => handleToggle(4)} />
-                    <span className="slider round"></span>
-                  </label>
-                </div>
+              <div className="cmp-reason-item">
+                <p><strong>Gain de temps :</strong> Inutile de retaper vos informations à chaque visite.</p>
               </div>
             </div>
+            <p className="cmp-policy-link">
+              Pour en savoir plus, consultez notre{' '}
+              <a href={POLICIES_URL} target="_blank" rel="noopener noreferrer">politique de confidentialité</a>.
+            </p>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eeeeee' }}>
-              <button className="cmp-link-preferences" onClick={handleDenyAll}>
-                Tout refuser
-              </button>
-              <button className="cmp-button-accept" onClick={handleSavePreferences} style={{ backgroundColor: 'var(--cmp-color)', borderColor: 'var(--cmp-color)' }}>
-                SAUVEGARDER MA SÉLECTION
+            {/* BOUTON REFUS SOUS LA POLITIQUE */}
+            <div className="cmp-dismiss-wrapper">
+              <button onClick={handleDenyAll} className="cmp-link-dismiss">
+                Continuer sans accepter &rarr;
               </button>
             </div>
           </div>
-        )}
 
+          <div className="cmp-footer-actions">
+            <button className="cmp-link-preferences" onClick={() => setView('preferences')}>
+              Paramétrer
+            </button>
+            <button className="cmp-button-accept" onClick={handleAcceptAll} style={{ backgroundColor: 'var(--cmp-color)', borderColor: 'var(--cmp-color)' }}>
+              Accepter et continuer
+            </button>
+          </div>
+
+        </div>
       </div>
-    </div>
-  );
-};
+    )}
+
+    {/* VUE PRÉFÉRENCES */}
+    {view === 'preferences' && (
+      <div className="cmp-modal-content cmp-view-preferences">
+        <div className="cmp-header-bar">
+          <div className="cmp-logo">
+            <img src={LOGO_URL} alt={`Logo ${SITE_NAME}`} style={{ maxHeight: '60px' }} />
+          </div>
+          <h2 style={{margin: 0, fontSize: '20px'}}>Centre de préférences</h2>
+        </div>
+        <span className="cmp-description_center">
+          Lorsque vous consultez un site Web, des données peuvent être stockées ou récupérées sous la forme de cookies. Vous pouvez modifier vos préférences ci-dessous.
+        </span>
+
+        <div className="cmp-category">
+          <div className="cmpcategory_1">
+            <span className="cmpcat_title">Cookies strictement nécessaires</span>
+            <span className="cmpcat_description">Absolument nécessaires au bon fonctionnement de notre site et ne peuvent pas être désactivés.</span>
+            <div className="toggle_validation">
+              <label className="switch">
+                <input type="checkbox" checked disabled />
+                <span className="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div className={toggles[2] ? "cmpcategory_1" : "cmpcategory_2"}>
+            <span className="cmpcat_title">Mesure de la performance</span>
+            <span className="cmpcat_description">Ces cookies nous permettent de mesurer l'activité des utilisateurs sur notre site.</span>
+            <div className="toggle_validation">
+              <label className="switch">
+                <input type="checkbox" checked={toggles[2]} onChange={() => handleToggle(2)} />
+                <span className="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div className={toggles[3] ? "cmpcategory_1" : "cmpcategory_2"}>
+            <span className="cmpcat_title">Cookies de fonctionnalité</span>
+            <span className="cmpcat_description">Ces cookies nous permettent de mettre en oeuvre des fonctionnalités de personnalisation.</span>
+            <div className="toggle_validation">
+              <label className="switch">
+                <input type="checkbox" checked={toggles[3]} onChange={() => handleToggle(3)} />
+                <span className="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div className={toggles[4] ? "cmpcategory_1" : "cmpcategory_2"}>
+            <span className="cmpcat_title">Publicité ciblée</span>
+            <span className="cmpcat_description">Ces cookies peuvent être déposés par nos partenaires publicitaires.</span>
+            <div className="toggle_validation">
+              <label className="switch">
+                <input type="checkbox" checked={toggles[4]} onChange={() => handleToggle(4)} />
+                <span className="slider round"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eeeeee' }}>
+          <button className="cmp-link-preferences" onClick={handleDenyAll}>
+            Tout refuser
+          </button>
+          <button className="cmp-button-accept" onClick={handleSavePreferences} style={{ backgroundColor: 'var(--cmp-color)', borderColor: 'var(--cmp-color)' }}>
+            SAUVEGARDER MA SÉLECTION
+          </button>
+        </div>
+      </div>
+    )}
+
+  </div>
+</div>
+    )
 
 // --- INITIALISATION DU WIDGET (Version Ultra-Robuste) ---
 const initCMP = () => {
