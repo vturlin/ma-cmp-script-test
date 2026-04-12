@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './Banner.css';
 
+// --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
+window.dataLayer = window.dataLayer || [];
+function gtag() { window.dataLayer.push(arguments); }
+gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'analytics_storage': 'denied',
+  'functionality_storage': 'denied',
+  'personalization_storage': 'denied',
+  'security_storage': 'granted',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'wait_for_update': 500
+});
+
 // --- RECUPERATION DYNAMIQUE DES VARIABLES ---
 const settings = window.cmpSettings || {};
 
@@ -16,18 +30,18 @@ const GCP_FUNCTION_URL = 'https://save-consent-141278816244.europe-west1.run.app
 // --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
 window.dataLayer = window.dataLayer || [];
 function gtag() { window.dataLayer.push(arguments); }
+gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'analytics_storage': 'denied',
+  'functionality_storage': 'denied',
+  'personalization_storage': 'denied',
+  'security_storage': 'granted',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'wait_for_update': 500
+});
 
 const GTM = {
-  setDefault: () => {
-    try {
-      gtag('consent', 'default', {
-        'ad_storage': "denied", 'analytics_storage': "denied",
-        'functionality_storage': "denied", 'personalization_storage': "denied",
-        'security_storage': "granted", 'ad_user_data': "denied",
-        'ad_personalization': "denied", 'wait_for_update': 500
-      });
-    } catch (e) { console.warn("GTM bloqué par le navigateur"); }
-  },
   updateConsent: (consentMode) => {
     try {
       const hasAds = consentMode.includes('4');
@@ -51,8 +65,6 @@ const GTM = {
     } catch (e) { console.warn("GTM bloqué par le navigateur"); }
   }
 };
-
-    GTM.setDefault();
 
 const Cookies = {
   get: (cname) => {
