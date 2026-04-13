@@ -302,8 +302,8 @@
 
   /* Vue préférences sur mobile */
   .cmp-view-preferences {
-    padding: 24px 20px;
-  }
+  padding: 16px 16px !important;
+}
 
   .cmp-header-bar {
     margin-bottom: 15px;
@@ -331,9 +331,6 @@
   width: 100%;
   text-align: center;
   order: 2;
-}
-.cmp-view-preferences {
-  padding: 16px 16px;
 }
 }
 
