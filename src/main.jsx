@@ -64,7 +64,7 @@ const Cookies = {
       const expires = new Date();
       const secureFlag = SECURE_COOKIE ? ';Secure' : '';
       expires.setDate(expires.getDate() + 365);
-      const rootDomain = DOMAIN.split('.').slice(-2).join('.');
+      const rootDomain = DOMAIN === 'localhost' ? 'localhost' : DOMAIN.split('.').slice(-2).join('.');
       document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${rootDomain};path=/;SameSite=Lax;{secureFlag}`;
       const id = Date.now() + '.' + Math.random().toString(36).substr(2, 3);
       document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${rootDomain};ppath=/;SameSite=Lax;{secureFlag}`;
