@@ -308,7 +308,35 @@
   .cmp-header-bar {
     margin-bottom: 15px;
   }
+   /* Titre centre de préférences sur mobile */
+.cmp-view-preferences h2 {
+  font-size: 15px !important;
 }
+
+/* Boutons vue préférences en colonne sur mobile */
+.cmp-view-preferences > div:last-child {
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Sauvegarder en pleine largeur en premier */
+.cmp-view-preferences > div:last-child .cmp-button-accept {
+  width: 100%;
+  text-align: center;
+  order: 1;
+}
+
+/* Tout refuser en pleine largeur en second */
+.cmp-view-preferences > div:last-child .cmp-link-preferences {
+  width: 100%;
+  text-align: center;
+  order: 2;
+}
+.cmp-view-preferences {
+  padding: 16px 16px;
+}
+}
+
 
 /* ==========================================================================
    4. VUE : CENTRE DE PRÉFÉRENCES
