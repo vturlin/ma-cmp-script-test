@@ -5,7 +5,7 @@ test.beforeEach(async ({ context }) => {
 });
 
 test('La bannière CMP s\'affiche au premier chargement', async ({ page }) => {
-  await page.goto('http://localhost:3000');
+  await page.goto('http://localhost:3000/tests/index.html');
   const banner = page.locator('.cmp-modal-overlay');
   await expect(banner).toBeVisible({ timeout: 5000 });
 });

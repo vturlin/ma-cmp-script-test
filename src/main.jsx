@@ -12,6 +12,7 @@ const BG_IMAGE_URL = settings.bgImage || 'https://via.placeholder.com/600x800?te
 const PRIMARY_COLOR = settings.primaryColor || '#000000';
 const POLICIES_URL = settings.policiesUrl || '/politique-de-confidentialite/';
 const GCP_FUNCTION_URL = 'https://save-consent-141278816244.europe-west1.run.app';
+const SECURE_COOKIE = settings.secureCookie !== false; // true par défaut
 
 // --- FONCTIONS UTILITAIRES (GTM & COOKIES) ---
 window.dataLayer = window.dataLayer || [];
@@ -61,11 +62,12 @@ const Cookies = {
   set: (consent) => {
     try {
       const expires = new Date();
+      const secureFlag = SECURE_COOKIE ? ';Secure' : '';
       expires.setDate(expires.getDate() + 365);
       const rootDomain = DOMAIN.split('.').slice(-2).join('.');
-      document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${rootDomain};path=/;SameSite=Lax;Secure`;
+      document.cookie = `consent_mode=${consent};expires=${expires.toUTCString()};domain=.${rootDomain};path=/;SameSite=Lax;{secureFlag}`;
       const id = Date.now() + '.' + Math.random().toString(36).substr(2, 3);
-      document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${rootDomain};ppath=/;SameSite=Lax;Secure`;
+      document.cookie = `consent_record=${id};expires=${expires.toUTCString()};domain=.${rootDomain};ppath=/;SameSite=Lax;{secureFlag}`;
     } catch (e) {
       console.warn("Écriture des cookies bloquée en mode privé");
     }
