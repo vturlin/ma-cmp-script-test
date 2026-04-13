@@ -1,28 +1,17 @@
-const { defineConfig } = require('@playwright/test');
+import { defineConfig } from '@playwright/test';
 
-module.exports = defineConfig({
+export default defineConfig({
   testDir: './tests',
-  
-  // Timeout global par test
   timeout: 30000,
-  
-  // Rapport d'erreur détaillé en HTML
   reporter: [
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
-    ['list'] // affiche les résultats dans les logs GitHub Actions
+    ['list']
   ],
-  
   use: {
-    // Screenshot automatique en cas d'échec
     screenshot: 'only-on-failure',
-    
-    // Vidéo en cas d'échec
     video: 'retain-on-failure',
-    
-    // Trace complète en cas d'échec (clics, network, console)
     trace: 'retain-on-failure',
   },
-  
   projects: [
     { name: 'Chromium', use: { browserName: 'chromium' } },
     { name: 'Firefox',  use: { browserName: 'firefox'  } },
