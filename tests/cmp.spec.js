@@ -46,8 +46,11 @@ test('Les toggles de préférences fonctionnent', async ({ page }) => {
   await page.goto(TEST_URL);
   await page.locator('.cmp-link-preferences').click();
   
-  // force: true car le checkbox est masqué par le CSS du toggle
+  // ✅ Attendre que la vue préférences soit visible avant tout
+  await expect(page.locator('.cmp-view-preferences')).toBeVisible();
+  
   const analyticsToggle = page.locator('input[type="checkbox"]').nth(1);
+  await analyticsToggle.scrollIntoViewIfNeeded();
   await analyticsToggle.check({ force: true });
   await expect(analyticsToggle).toBeChecked();
   await analyticsToggle.uncheck({ force: true });
@@ -58,7 +61,11 @@ test('Sauvegarde préférences partielles pose le bon cookie', async ({ page }) 
   await page.goto(TEST_URL);
   await page.locator('.cmp-link-preferences').click();
   
+  // ✅ Attendre que la vue préférences soit visible avant tout
+  await expect(page.locator('.cmp-view-preferences')).toBeVisible();
+  
   const analyticsToggle = page.locator('input[type="checkbox"]').nth(1);
+  await analyticsToggle.scrollIntoViewIfNeeded();
   await analyticsToggle.check({ force: true });
   await page.locator('text=SAUVEGARDER MA SÉLECTION').click();
   await expect(page.locator('.cmp-modal-overlay')).not.toBeVisible();
