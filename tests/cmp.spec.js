@@ -45,28 +45,35 @@ test('Clic sur "Paramétrer" ouvre la vue préférences', async ({ page }) => {
 test('Les toggles de préférences fonctionnent', async ({ page }) => {
   await page.goto(TEST_URL);
   await page.locator('.cmp-link-preferences').click();
-  
-  // ✅ Attendre que la vue préférences soit visible avant tout
   await expect(page.locator('.cmp-view-preferences')).toBeVisible();
+
+  // Clic direct via JS car le checkbox a width:0 height:0 dans le CSS
+  await page.evaluate(() => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes[1].click(); // coche
+  });
   
   const analyticsToggle = page.locator('input[type="checkbox"]').nth(1);
-  await analyticsToggle.scrollIntoViewIfNeeded();
-  await analyticsToggle.check({ force: true });
   await expect(analyticsToggle).toBeChecked();
-  await analyticsToggle.uncheck({ force: true });
+  
+  await page.evaluate(() => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes[1].click(); // décoche
+  });
   await expect(analyticsToggle).not.toBeChecked();
 });
 
 test('Sauvegarde préférences partielles pose le bon cookie', async ({ page }) => {
   await page.goto(TEST_URL);
   await page.locator('.cmp-link-preferences').click();
-  
-  // ✅ Attendre que la vue préférences soit visible avant tout
   await expect(page.locator('.cmp-view-preferences')).toBeVisible();
-  
-  const analyticsToggle = page.locator('input[type="checkbox"]').nth(1);
-  await analyticsToggle.scrollIntoViewIfNeeded();
-  await analyticsToggle.check({ force: true });
+
+  // Clic direct via JS car le checkbox a width:0 height:0 dans le CSS
+  await page.evaluate(() => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes[1].click();
+  });
+
   await page.locator('text=SAUVEGARDER MA SÉLECTION').click();
   await expect(page.locator('.cmp-modal-overlay')).not.toBeVisible();
   const cookies = await page.context().cookies();
