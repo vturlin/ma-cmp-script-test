@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMP Test Page</title>
+  <script>
+    window.cmpSettings = {
+      domain: 'localhost',
+      siteName: 'Test Site',
+      logo: 'https://via.placeholder.com/150x50?text=Logo',
+      bgImage: 'https://via.placeholder.com/600x800?text=Image',
+      primaryColor: '#FFC107',
+      policiesUrl: '/politique-de-confidentialite/',
+      gcpFunctionUrl: '' // vide pour les tests — on mockera l'appel
+    };
+  </script>
+  <script src="/dist/welcome-widget.js"></script>
+</head>
+<body>
+  <h1>Page de test CMP</h1>
+</body>
+</html>
